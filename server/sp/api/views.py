@@ -17,8 +17,14 @@ class CitizenViewSet(viewsets.ModelViewSet):
 
 # ... other
 
+covid_api_urls = [
+    'https://finnhub.io/api/v1/covid19/us',
+    'https://corona.lmao.ninja/v2/countries/America?yesterday&strict&query%20',
+    
+]
+
 @api_view(['GET'])
 def covidApiHome(request):
-    res = req.get('https://corona.lmao.ninja/v2/continents/Americas?yesterday&strict')
-    # data = res.json()
-    return Response({"status": res.status_code, "data": res.json()}, res.status_code)
+    res = req.get()
+    data = res.json()
+    return Response({"status": res.status_code, "data": data}, res.status_code)
