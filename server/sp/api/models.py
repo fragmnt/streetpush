@@ -5,6 +5,7 @@ from django.db import models
 
 class Citizen(models.Model):
     alias = models.CharField(max_length=60)
+    created_At = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.alias
+        return '%s, %s' % (self.alias, self.created_At)
