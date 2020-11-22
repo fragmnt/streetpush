@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .serializers import CitizenSerializer
-from .models import Citizen
+from .serializers import CitizenSerializer, AlertSerializer
+from .models import Citizen, Alert
 
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
@@ -15,7 +15,11 @@ class CitizenViewSet(viewsets.ModelViewSet):
     queryset = Citizen.objects.all().order_by('alias')
     serializer_class = CitizenSerializer
 
-# ... other
+class AlertViewSet(viewsets.ModelViewSet):
+    queryset = Alert.objects.all().order_by('date_created')
+    serializer_class = AlertSerializer
+
+## MARK: ... other
 
 covid_api_urls = [
     'https://finnhub.io/api/v1/covid19/us',
