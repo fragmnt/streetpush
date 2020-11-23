@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .serializers import CitizenSerializer, AlertSerializer
-from .models import Citizen, Alert
+from .serializers import CitizenSerializer, AlertSerializer, NotificationSerializer
+from .models import Citizen, Alert, Notification
 
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
@@ -18,6 +18,10 @@ class CitizenViewSet(viewsets.ModelViewSet):
 class AlertViewSet(viewsets.ModelViewSet):
     queryset = Alert.objects.all().order_by('date_created')
     serializer_class = AlertSerializer
+
+class NotificationViewSet(viewsets.ModelViewSet):
+    queryset = Notification.objects.all().order_by('date_reported')
+    serializer_class = NotificationSerializer
 
 ## MARK: ... other
 

@@ -6,6 +6,7 @@ from . import views
 router = routers.DefaultRouter()
 router.register(r'citizens', views.CitizenViewSet)
 router.register(r'alerts', views.AlertViewSet)
+router.register(r'notifications', views.NotificationViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
