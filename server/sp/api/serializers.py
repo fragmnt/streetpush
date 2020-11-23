@@ -11,4 +11,4 @@ class CitizenSerializer(serializers.HyperlinkedModelSerializer):
 class AlertSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Alert
-        fields = ('name','date_created', 'description', 'range')
+        fields = ('name','date_created', 'description', 'severity')
