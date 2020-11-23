@@ -12,7 +12,7 @@ RUN apt-get update && \
 
 COPY . app
 
-RUN apt-get install -y python-software-properties software-properties-common
+RUN apt-get install -y software-properties-common
 
 RUN pip3 install uwsgi && \
     pip3 install -r requirements.txt
