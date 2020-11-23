@@ -15,7 +15,7 @@ COPY . app
 RUN apt-get install -y software-properties-common
 
 RUN pip3 install uwsgi && \
-    pip3 install -r requirements.txt
+    pip3 install -r app/requirements.txt
 
 EXPOSE 9887
 
