@@ -9,7 +9,39 @@ from rest_framework.response import Response
 import requests
 req = requests
 
-# Create your views here.
+class ListCitizens(APIView):
+    """
+        View to list all citizens in the system.
+    """
+    def get(self, request):
+        """
+            Return a list of citizens
+        """
+        citizens = Citizen.objects.all()
+        citizen_serializer = CitizenSerializer(citizens, many=True)
+        return Response(citizen_serializer.data)
+
+class CreateCitizen(APIView):
+    def post(self, request):
+        """
+            Create a new citizen
+        """
+        c = request.data
+        citizens = CitizenSerializer(data = c)
+        if citizens.is_valid():
+            citizens.save()
+            return Response(citizens.data, status=201)
+        return Response(citizens.errors, status=400)
+          
+        
+
+
+
+
+
+
+
+## OLD: Create your views here.
 
 class CitizenViewSet(viewsets.ModelViewSet):
     queryset = Citizen.objects.all().order_by('alias')
