@@ -1,19 +1,18 @@
 # serializers.py
 from rest_framework import serializers
 
-from .models import Citizen, Alert, Notification
-
-class CitizenSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Citizen
-        fields = ('alias','created_At')
+from .models import Alert
 
 class AlertSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Alert
-        fields = ('name','date_created', 'description', 'severity')
+        fields = ('title','date_created', 'description', 'severity',  'long', 'lat')
 
-class NotificationSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Notification 
-        fields = ('title', 'brief_description', 'date_reported', 'long', 'lat', 'linked_article_url')
+
+#class MessageSerializer(serializers.HyperlinkedModelSerializer):
+#    body = serializers.CharField(required=True)
+##   sender = serializers.ReadOnlyField()
+
+#   class Meta:
+#      model = Message 
+#     fields = ('id', 'body', 'sent_at', 'sender')

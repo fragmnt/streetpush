@@ -1,70 +1,68 @@
 from rest_framework import viewsets
-from .serializers import CitizenSerializer, AlertSerializer, NotificationSerializer
-from .models import Citizen, Alert, Notification
+from .serializers import AlertSerializer
+from .models import  Alert
+from rest_framework.permissions import IsAuthenticated
 
 from rest_framework.views import APIView
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
 import requests
 req = requests
 
-class ListCitizens(APIView):
-    """
-        View to list all citizens in the system.
-    """
-    def get(self, request):
-        """
-            Return a list of citizens
-        """
-        citizens = Citizen.objects.all()
-        citizen_serializer = CitizenSerializer(citizens, many=True)
-        return Response(citizen_serializer.data)
-
-class CreateCitizen(APIView):
-    def post(self, request):
-        """
-            Create a new citizen
-        """
-        c = request.data
-        citizens = CitizenSerializer(data = c)
-        if citizens.is_valid():
-            citizens.save()
-            return Response(citizens.data, status=201)
-        return Response(citizens.errors, status=400)
-          
-        
-
-
-
-
-
-
-
-## OLD: Create your views here.
-
-class CitizenViewSet(viewsets.ModelViewSet):
-    queryset = Citizen.objects.all().order_by('alias')
-    serializer_class = CitizenSerializer
-
-class AlertViewSet(viewsets.ModelViewSet):
-    queryset = Alert.objects.all().order_by('date_created')
-    serializer_class = AlertSerializer
-
-class NotificationViewSet(viewsets.ModelViewSet):
-    queryset = Notification.objects.all().order_by('date_reported')
-    serializer_class = NotificationSerializer
-
-## MARK: ... other
+## MARK: COVID19 API URLS
 
 covid_api_urls = [
     'https://finnhub.io/api/v1/covid19/us',
-    'https://corona.lmao.ninja/v2/countries/America?yesterday&strict&query%20',
-    
+    'https://corona.lmao.ninja/v2/states/New York?yesterday=',
+    'https://api.covidtracking.com/v1/states/ny/info.json',
+    'https://api.covidtracking.com/v1/states/ny/daily.json',
 ]
 
+# Get Stats on New Cases, Deaths in USA. Updated every 10 min.
+@permission_classes([IsAuthenticated])
 @api_view(['GET'])
 def covidApiHome(request):
-    res = req.get()
+    res = req.get(covid_api_urls[1])
     data = res.json()
     return Response({"status": res.status_code, "data": data}, res.status_code)
+
+@permission_classes([IsAuthenticated])
+@api_view(['GET'])
+def covidResources(request):
+    res = req.get(covid_api_urls[2])
+    data = res.json()
+    return Response({ 'status': res.status_code, "data": data }, res.status_code)
+
+@permission_classes([IsAuthenticated])
+@api_view(['GET'])
+def covidTimeseries(request):
+    res = req.get(covid_api_urls[3])
+    data = res.json()
+    return Response({ 'status': res.status_code, "data": data }, res.status_code)
+
+class AlertViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = Alert.objects.all().order_by('date_created')
+    serializer_class = AlertSerializer
+
+
+# Message: Create New, List All, Delete One
+#@api_view(['GET'])
+#def listAllMessages(request):
+#    messages = Message.objects.all()
+#    msg_serializer = MessageSerializer(messages, many=True)
+#    return Response(msg_serializer.data, status=200)
+
+# @api_view(['POST'])
+# def createNewMessage(request):
+#    m = request.data
+#    messages = MessageSerializer(data = m)
+#    if messages.is_valid():
+#        messages.save()
+#        return Response(messages.data, status=201)
+#    return Response(messages.errors, status=400)
+
+
+
+

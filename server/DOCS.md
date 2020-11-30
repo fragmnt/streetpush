@@ -15,3 +15,7 @@ Featured COVID-19 APIs: https://postman-toolboxes.github.io/covid-19/#featured-c
 Additional COVID-19 APIs: https://postman-toolboxes.github.io/covid-19/#additional-collections
 
 ---
+
+Celery Command: ```
+celery -A streetpush worker -l INFO
+```

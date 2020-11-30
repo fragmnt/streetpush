@@ -2,6 +2,8 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/App.css';
 
+import BlockModal from './Components/block.modal';
+
 // Mapbox
 import mapboxgl from 'mapbox-gl';
 mapboxgl.accessToken = 'pk.eyJ1Ijoic2FuenNhbnoiLCJhIjoiY2tocnF2dHFlMDVxczJxbXRqaG16Z2RxNyJ9.m62F8Nt5N-6l1yRCkmNLtQ';
@@ -17,6 +19,7 @@ class App extends React.Component {
               pitch: 45,
               bearing: -25,
               toggled: false,
+              isChatting: false,
             // get lng and lat from user permissions. keep zoom level
         }
 
@@ -75,6 +78,7 @@ class App extends React.Component {
     render () {
         return (
             <>
+                <BlockModal/>
                 <div>
                     <div className="sidebarStyle">
                         <h3>Streetpush</h3>
@@ -83,11 +87,15 @@ class App extends React.Component {
                     </div>
                     <div>
                         {this.state.toggled ? <div className="sidebarModal">
-                            <h3>Civilian Chat</h3>
-                            <form>
+                        <h3>Welcome {sessionStorage.getItem('username')}!</h3>
+                        <p>Start chatting with people in your neighborhood by clicking the button below,
+                            it'll start a new chat session and show all the previous messages from your area.
+                        </p>
+                        <button>Start chatting</button>
+                        {this.state.isChatting ? <form>
                                 <input placeholder="Send a message"/>
                                 <button>Send</button>
-                            </form>
+                            </form> : null}
                         </div> : null}
                     </div>
                     <div className="menubarStyle">
