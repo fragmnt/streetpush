@@ -1,10 +1,12 @@
 const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
+    publicPath: '/public/'
   },
   resolve: {
     modules: [path.join(__dirname, 'src'), 'node_modules'],
@@ -58,5 +60,10 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: './public/index.html',
     }),
+    /*new CopyPlugin({
+      patterns: [{
+        from: './public', to: 'public'
+      }],
+    }),*/
   ],
 };
