@@ -6,7 +6,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
-    publicPath: '/public/'
+    publicPath: '/'
   },
   resolve: {
     modules: [path.join(__dirname, 'src'), 'node_modules'],
@@ -60,10 +60,10 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: './public/index.html',
     }),
-    /*new CopyPlugin({
+    new CopyPlugin({
       patterns: [{
         from: './public', to: 'public'
       }],
-    }),*/
+    }),
   ],
 };

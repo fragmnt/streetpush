@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.5",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
     "bent": "^7.3.12",
     "bootstrap": "^4.5.3",
     "mapbox-gl": "^1.13.0",
